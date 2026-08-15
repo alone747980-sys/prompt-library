@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prompt Library</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f6fb;
+color:#111827;
+}
+
+header{
+background:#111827;
+color:white;
+padding:25px 15px;
+text-align:center;
+}
+
+header h1{
+font-size:30px;
+}
+
+header p{
+margin-top:7px;
+color:#cbd5e1;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px 15px;
+}
+
+.search{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:16px;
+margin-bottom:15px;
+}
+
+.categories{
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding-bottom:10px;
+}
+
+.categories button{
+border:0;
+padding:10px 16px;
+border-radius:20px;
+background:white;
+white-space:nowrap;
+}
+
+.categories button.active{
+background:#111827;
+color:white;
+}
+
+.add-box{
+background:white;
+padding:18px;
+border-radius:15px;
+margin:15px 0;
+box-shadow:0 3px 15px #00000010;
+}
+
+.add-box input,
+.add-box textarea,
+.add-box select{
+width:100%;
+padding:12px;
+margin:7px 0;
+border:1px solid #ddd;
+border-radius:9px;
+}
+
+textarea{
+min-height:130px;
+}
+
+.add-btn{
+width:100%;
+padding:13px;
+border:0;
+border-radius:10px;
+background:#111827;
+color:white;
+font-size:16px;
+}
+
+.card{
+background:white;
+padding:18px;
+margin:14px 0;
+border-radius:15px;
+box-shadow:0 3px 15px #00000010;
+}
+
+.tag{
+display:inline-block;
+background:#eef2ff;
+padding:5px 9px;
+border-radius:8px;
+font-size:12px;
+margin-bottom:10px;
+}
+
+.card h3{
+margin-bottom:8px;
+}
+
+.prompt{
+background:#f8fafc;
+padding:12px;
+border-radius:10px;
+line-height:1.5;
+white-space:pre-wrap;
+margin-bottom:12px;
+}
+
+.actions{
+display:flex;
+gap:8px;
+}
+
+.actions button{
+flex:1;
+padding:10px;
+border:0;
+border-radius:9px;
+}
+
+.copy{
+background:#111827;
+color:white;
+}
+
+.favorite{
+background:#f1f5f9;
+}
+
+.delete{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.empty{
+text-align:center;
+padding:30px;
+color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>📚 Prompt Library</h1>
+
+<p>Your AI prompts, all in one place</p>
+
+</header>
+
+<div class="container">
+
+<input
+id="search"
+class="search"
+placeholder="🔍 Search prompts..."
+oninput="renderPrompts()"
+>
+
+<div class="categories">
+
+<button class="active"
+onclick="setCategory('All',this)">
+All
+</button>
+
+<button onclick="setCategory('Image',this)">
+🖼️ Image
+</button>
+
+<button onclick="setCategory('Video',this)">
+🎬 Video
+</button>
+
+<button onclick="setCategory('Chat',this)">
+🤖 Chat
+</button>
+
+<button onclick="setCategory('Social',this)">
+📱 Social
+</button>
+
+</div>
+
+<div class="add-box">
+
+<h2>➕ Add New Prompt</h2>
+
+<input
+id="title"
+placeholder="Prompt title"
+>
+
+<select id="category">
+
+<option value="Image">Image</option>
+
+<option value="Video">Video</option>
+
+<option value="Chat">Chat</option>
+
+<option value="Social">Social</option>
+
+</select>
+
+<textarea
+id="promptText"
+placeholder="Write your prompt here..."
+></textarea>
+
+<button
+class="add-btn"
+onclick="addPrompt()"
+>
+Add Prompt
+</button>
+
+</div>
+
+<div id="promptList"></div>
+
+</div>
+
+<script>
+
+let prompts =
+JSON.parse(localStorage.getItem("promptLibrary")) || [
+
+{
+id:1,
+title:"Cinematic AI Image",
+category:"Image",
+text:"Create an ultra-realistic cinematic scene with dramatic lighting, highly detailed environment, realistic textures and professional photography quality.",
+favorite:false
+},
+
+{
+id:2,
+title:"AI Video Scene",
+category:"Video",
+text:"Create a cinematic 10-second video with smooth camera movement, realistic lighting, natural motion and highly detailed surroundings.",
+favorite:false
+},
+
+{
+id:3,
+title:"AI Assistant",
+category:"Chat",
+text:"Act as an expert AI assistant. Give clear, accurate and easy-to-understand answers with useful examples.",
+favorite:false
+}
+
+];
+
+let currentCategory="All";
+
+function save(){
+
+localStorage.setItem(
+"promptLibrary",
+JSON.stringify(prompts)
+);
+
+}
+
+function setCategory(category,button){
+
+currentCategory=category;
+
+document
+.querySelectorAll(".categories button")
+.forEach(btn=>btn.classList.remove("active"));
+
+button.classList.add("active");
+
+renderPrompts();
+
+}
+
+function renderPrompts(){
+
+const list=document.getElementById("promptList");
+
+const search=
+document.getElementById("search")
+.value
+.toLowerCase();
+
+let filtered=prompts.filter(p=>{
+
+const categoryMatch=
+currentCategory==="All" ||
+p.category===currentCategory;
+
+const searchMatch=
+p.title.toLowerCase().includes(search) ||
+p.text.toLowerCase().includes(search);
+
+return categoryMatch && searchMatch;
+
+});
+
+if(filtered.length===0){
+
+list.innerHTML=
+`<div class="empty">
+😕 No prompts found
+</div>`;
+
+return;
+
+}
+
+list.innerHTML=filtered.map(p=>`
+
+<div class="card">
+
+<span class="tag">
+${p.category}
+</span>
+
+<h3>
+${escapeHTML(p.title)}
+</h3>
+
+<div class="prompt">
+${escapeHTML(p.text)}
+</div>
+
+<div class="actions">
+
+<button
+class="copy"
+onclick="copyPrompt(${p.id})">
+📋 Copy
+</button>
+
+<button
+class="favorite"
+onclick="toggleFavorite(${p.id})">
+
+${p.favorite ? "⭐" : "☆"}
+Favorite
+
+</button>
+
+<button
+class="delete"
+onclick="deletePrompt(${p.id})">
+🗑️
+</button>
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+function addPrompt(){
+
+const title=
+document.getElementById("title")
+.value.trim();
+
+const category=
+document.getElementById("category")
+.value;
+
+const text=
+document.getElementById("promptText")
+.value.trim();
+
+if(!title || !text){
+
+alert("Please enter title and prompt.");
+
+return;
+
+}
+
+prompts.unshift({
+
+id:Date.now(),
+
+title:title,
+
+category:category,
+
+text:text,
+
+favorite:false
+
+});
+
+save();
+
+document.getElementById("title").value="";
+
+document.getElementById("promptText").value="";
+
+renderPrompts();
+
+alert("✅ Prompt added!");
+
+}
+
+function copyPrompt(id){
+
+const prompt=
+prompts.find(p=>p.id===id);
+
+navigator.clipboard
+.writeText(prompt.text)
+.then(()=>{
+
+alert("✅ Prompt copied!");
+
+});
+
+}
+
+function toggleFavorite(id){
+
+const prompt=
+prompts.find(p=>p.id===id);
+
+prompt.favorite=!prompt.favorite;
+
+save();
+
+renderPrompts();
+
+}
+
+function deletePrompt(id){
+
+if(!confirm("Delete this prompt?"))
+return;
+
+prompts=
+prompts.filter(p=>p.id!==id);
+
+save();
+
+renderPrompts();
+
+}
+
+function escapeHTML(text){
+
+return text
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+renderPrompts();
+
+</script>
+
+</body>
+</html>
