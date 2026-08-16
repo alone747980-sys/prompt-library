@@ -3,247 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Prompt Library</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#f4f6fb;
-color:#111827;
-}
-
-header{
-background:#111827;
-color:white;
-padding:25px 15px;
-text-align:center;
-}
-
-header h1{
-font-size:30px;
-}
-
-header p{
-margin-top:7px;
-color:#cbd5e1;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-padding:20px 15px;
-}
-
-.search{
-width:100%;
-padding:14px;
-border:1px solid #ddd;
-border-radius:12px;
-font-size:16px;
-margin-bottom:15px;
-}
-
-.categories{
-display:flex;
-gap:8px;
-overflow-x:auto;
-padding-bottom:10px;
-}
-
-.categories button{
-border:0;
-padding:10px 16px;
-border-radius:20px;
-background:white;
-white-space:nowrap;
-}
-
-.categories button.active{
-background:#111827;
-color:white;
-}
-
-.add-box{
-background:white;
-padding:18px;
-border-radius:15px;
-margin:15px 0;
-box-shadow:0 3px 15px #00000010;
-}
-
-.add-box input,
-.add-box textarea,
-.add-box select{
-width:100%;
-padding:12px;
-margin:7px 0;
-border:1px solid #ddd;
-border-radius:9px;
-}
-
-textarea{
-min-height:130px;
-}
-
-.add-btn{
-width:100%;
-padding:13px;
-border:0;
-border-radius:10px;
-background:#111827;
-color:white;
-font-size:16px;
-}
-
-.card{
-background:white;
-padding:18px;
-margin:14px 0;
-border-radius:15px;
-box-shadow:0 3px 15px #00000010;
-}
-
-.tag{
-display:inline-block;
-background:#eef2ff;
-padding:5px 9px;
-border-radius:8px;
-font-size:12px;
-margin-bottom:10px;
-}
-
-.card h3{
-margin-bottom:8px;
-}
-
-.prompt{
-background:#f8fafc;
-padding:12px;
-border-radius:10px;
-line-height:1.5;
-white-space:pre-wrap;
-margin-bottom:12px;
-}
-
-.actions{
-display:flex;
-gap:8px;
-}
-
-.actions button{
-flex:1;
-padding:10px;
-border:0;
-border-radius:9px;
-}
-
-.copy{
-background:#111827;
-color:white;
-}
-
-.favorite{
-background:#f1f5f9;
-}
-
-.delete{
-background:#fee2e2;
-color:#991b1b;
-}
-
-.empty{
-text-align:center;
-padding:30px;
-color:#777;
-}
-
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f6fb;color:#111827}
+header{background:#111827;color:white;text-align:center;padding:25px 15px}
+header h1{font-size:29px}
+header p{margin-top:6px;color:#cbd5e1}
+.container{max-width:900px;margin:auto;padding:18px 15px}
+.search{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:16px;margin-bottom:14px}
+.categories{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.categories button{border:0;padding:10px 15px;border-radius:20px;background:white;white-space:nowrap}
+.categories button.active{background:#111827;color:white}
+.login,.adminBox{background:white;padding:18px;border-radius:15px;margin:15px 0;box-shadow:0 3px 15px #00000010}
+.login input,.adminBox input,.adminBox textarea,.adminBox select{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:9px}
+textarea{min-height:130px;resize:vertical}
+button{cursor:pointer}
+.mainBtn{width:100%;padding:13px;border:0;border-radius:10px;background:#111827;color:white;font-size:16px}
+.logout{background:#dc2626;margin-top:8px}
+.card{background:white;padding:18px;margin:14px 0;border-radius:15px;box-shadow:0 3px 15px #00000010}
+.tag{display:inline-block;background:#eef2ff;padding:5px 9px;border-radius:8px;font-size:12px;margin-bottom:10px}
+.card h3{margin-bottom:8px}
+.prompt{background:#f8fafc;padding:12px;border-radius:10px;line-height:1.5;white-space:pre-wrap;margin-bottom:12px}
+.actions{display:flex;gap:8px}
+.actions button{flex:1;padding:10px;border:0;border-radius:9px}
+.copy{background:#111827;color:white}
+.edit{background:#e5e7eb}
+.delete{background:#fee2e2;color:#991b1b}
+.hidden{display:none}
+.message{text-align:center;margin-top:8px;font-size:14px}
+.empty{text-align:center;padding:30px;color:#777}
 </style>
 </head>
 
 <body>
 
 <header>
-
 <h1>📚 Prompt Library</h1>
-
-<p>Your AI prompts, all in one place</p>
-
+<p>AI Prompts — All in One Place</p>
 </header>
 
 <div class="container">
+
+<!-- ADMIN LOGIN -->
+<div id="loginBox" class="login">
+<h2>🔐 Admin Login</h2>
+
+<input id="email" type="email" placeholder="Admin Email">
+
+<input id="password" type="password" placeholder="Password">
+
+<button class="mainBtn" onclick="loginAdmin()">Login</button>
+
+<div id="loginMessage" class="message"></div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="adminBox hidden">
+
+<h2 id="formTitle">➕ Add Prompt</h2>
+
+<input id="title" placeholder="Prompt title">
+
+<select id="category">
+<option value="Image">🖼️ Image</option>
+<option value="Video">🎬 Video</option>
+<option value="Chat">🤖 Chat</option>
+<option value="Social">📱 Social</option>
+<option value="Other">📚 Other</option>
+</select>
+
+<textarea id="promptText" placeholder="Write your prompt here..."></textarea>
+
+<button class="mainBtn" onclick="savePrompt()">Save Prompt</button>
+
+<button class="mainBtn logout" onclick="logoutAdmin()">Logout</button>
+
+<div id="adminMessage" class="message"></div>
+
+</div>
 
 <input
 id="search"
 class="search"
 placeholder="🔍 Search prompts..."
-oninput="renderPrompts()"
+oninput="loadPrompts()"
 >
 
 <div class="categories">
 
-<button class="active"
-onclick="setCategory('All',this)">
-All
-</button>
+<button class="active" onclick="setCategory('All',this)">All</button>
 
-<button onclick="setCategory('Image',this)">
-🖼️ Image
-</button>
+<button onclick="setCategory('Image',this)">🖼️ Image</button>
 
-<button onclick="setCategory('Video',this)">
-🎬 Video
-</button>
+<button onclick="setCategory('Video',this)">🎬 Video</button>
 
-<button onclick="setCategory('Chat',this)">
-🤖 Chat
-</button>
+<button onclick="setCategory('Chat',this)">🤖 Chat</button>
 
-<button onclick="setCategory('Social',this)">
-📱 Social
-</button>
+<button onclick="setCategory('Social',this)">📱 Social</button>
 
-</div>
-
-<div class="add-box">
-
-<h2>➕ Add New Prompt</h2>
-
-<input
-id="title"
-placeholder="Prompt title"
->
-
-<select id="category">
-
-<option value="Image">Image</option>
-
-<option value="Video">Video</option>
-
-<option value="Chat">Chat</option>
-
-<option value="Social">Social</option>
-
-</select>
-
-<textarea
-id="promptText"
-placeholder="Write your prompt here..."
-></textarea>
-
-<button
-class="add-btn"
-onclick="addPrompt()"
->
-Add Prompt
-</button>
+<button onclick="setCategory('Other',this)">📚 Other</button>
 
 </div>
 
@@ -251,134 +111,311 @@ Add Prompt
 
 </div>
 
-<script>
+<script type="module">
 
-let prompts =
-JSON.parse(localStorage.getItem("promptLibrary")) || [
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-{
-id:1,
-title:"Cinematic AI Image",
-category:"Image",
-text:"Create an ultra-realistic cinematic scene with dramatic lighting, highly detailed environment, realistic textures and professional photography quality.",
-favorite:false
-},
+import {
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-{
-id:2,
-title:"AI Video Scene",
-category:"Video",
-text:"Create a cinematic 10-second video with smooth camera movement, realistic lighting, natural motion and highly detailed surroundings.",
-favorite:false
-},
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+updateDoc,
+query,
+orderBy,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-{
-id:3,
-title:"AI Assistant",
-category:"Chat",
-text:"Act as an expert AI assistant. Give clear, accurate and easy-to-understand answers with useful examples.",
-favorite:false
+
+/* ==============================
+   FIREBASE CONFIG
+============================== */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCo8J5VmlbIGoJikd8h0iXwAQsC9P3EK-4",
+
+authDomain: "prompt-library-8fb60.firebaseapp.com",
+
+projectId: "prompt-library-8fb60",
+
+storageBucket: "prompt-library-8fb60.firebasestorage.app",
+
+messagingSenderId: "609680472128",
+
+appId: "1:609680472128:web:4053c6b8c23a74d69b87a5",
+
+measurementId: "G-CZ7Q504NCD"
+
+};
+
+
+/* ==============================
+   ADMIN EMAIL
+============================== */
+
+const ADMIN_EMAIL = "YOUR_ADMIN_EMAIL";
+
+
+/* ==============================
+   FIREBASE START
+============================== */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+/* ==============================
+   VARIABLES
+============================== */
+
+let currentCategory = "All";
+
+let editingId = null;
+
+
+/* ==============================
+   LOGIN STATE
+============================== */
+
+onAuthStateChanged(auth, user => {
+
+if(user && user.email === ADMIN_EMAIL){
+
+document.getElementById("loginBox")
+.classList.add("hidden");
+
+document.getElementById("adminPanel")
+.classList.remove("hidden");
+
+}else{
+
+document.getElementById("loginBox")
+.classList.remove("hidden");
+
+document.getElementById("adminPanel")
+.classList.add("hidden");
+
 }
 
-];
-
-let currentCategory="All";
-
-function save(){
-
-localStorage.setItem(
-"promptLibrary",
-JSON.stringify(prompts)
-);
-
-}
-
-function setCategory(category,button){
-
-currentCategory=category;
-
-document
-.querySelectorAll(".categories button")
-.forEach(btn=>btn.classList.remove("active"));
-
-button.classList.add("active");
-
-renderPrompts();
-
-}
-
-function renderPrompts(){
-
-const list=document.getElementById("promptList");
-
-const search=
-document.getElementById("search")
-.value
-.toLowerCase();
-
-let filtered=prompts.filter(p=>{
-
-const categoryMatch=
-currentCategory==="All" ||
-p.category===currentCategory;
-
-const searchMatch=
-p.title.toLowerCase().includes(search) ||
-p.text.toLowerCase().includes(search);
-
-return categoryMatch && searchMatch;
+loadPrompts();
 
 });
 
-if(filtered.length===0){
 
-list.innerHTML=
-`<div class="empty">
-😕 No prompts found
-</div>`;
+/* ==============================
+   ADMIN LOGIN
+============================== */
+
+window.loginAdmin = async function(){
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value;
+
+const message =
+document.getElementById("loginMessage");
+
+try{
+
+const result =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+if(result.user.email !== ADMIN_EMAIL){
+
+await signOut(auth);
+
+message.innerText =
+"❌ You are not authorized as Admin.";
 
 return;
 
 }
 
-list.innerHTML=filtered.map(p=>`
+message.innerText = "✅ Login successful!";
+
+}catch(error){
+
+message.innerText =
+"❌ Login failed. Check email and password.";
+
+}
+
+};
+
+
+/* ==============================
+   LOGOUT
+============================== */
+
+window.logoutAdmin = async function(){
+
+await signOut(auth);
+
+};
+
+
+/* ==============================
+   CATEGORY
+============================== */
+
+window.setCategory = function(category,button){
+
+currentCategory = category;
+
+document
+.querySelectorAll(".categories button")
+.forEach(btn =>
+btn.classList.remove("active")
+);
+
+button.classList.add("active");
+
+loadPrompts();
+
+};
+
+
+/* ==============================
+   LOAD PROMPTS
+============================== */
+
+window.loadPrompts = async function(){
+
+const list =
+document.getElementById("promptList");
+
+const search =
+document.getElementById("search")
+.value.toLowerCase();
+
+list.innerHTML =
+"<div class='empty'>Loading prompts...</div>";
+
+try{
+
+const snapshot =
+await getDocs(
+collection(db,"prompts")
+);
+
+let prompts = [];
+
+snapshot.forEach(item => {
+
+prompts.push({
+id:item.id,
+...item.data()
+});
+
+});
+
+
+prompts = prompts.filter(p => {
+
+const categoryMatch =
+currentCategory === "All" ||
+p.category === currentCategory;
+
+const searchMatch =
+(p.title || "")
+.toLowerCase()
+.includes(search)
+
+||
+
+(p.prompt || "")
+.toLowerCase()
+.includes(search);
+
+return categoryMatch && searchMatch;
+
+});
+
+
+if(prompts.length === 0){
+
+list.innerHTML =
+"<div class='empty'>😕 No prompts found</div>";
+
+return;
+
+}
+
+
+const user = auth.currentUser;
+
+const isAdmin =
+user && user.email === ADMIN_EMAIL;
+
+
+list.innerHTML =
+prompts.map(p => `
 
 <div class="card">
 
 <span class="tag">
-${p.category}
+${escapeHTML(p.category || "Other")}
 </span>
 
 <h3>
-${escapeHTML(p.title)}
+${escapeHTML(p.title || "Untitled")}
 </h3>
 
 <div class="prompt">
-${escapeHTML(p.text)}
+${escapeHTML(p.prompt || "")}
 </div>
 
 <div class="actions">
 
 <button
 class="copy"
-onclick="copyPrompt(${p.id})">
+onclick="copyPrompt('${p.id}')">
 📋 Copy
 </button>
 
+${
+isAdmin
+?
+`
+
 <button
-class="favorite"
-onclick="toggleFavorite(${p.id})">
-
-${p.favorite ? "⭐" : "☆"}
-Favorite
-
+class="edit"
+onclick="editPrompt('${p.id}')">
+✏️ Edit
 </button>
 
 <button
 class="delete"
-onclick="deletePrompt(${p.id})">
-🗑️
+onclick="deletePrompt('${p.id}')">
+🗑️ Delete
 </button>
+
+`
+:
+""
+}
 
 </div>
 
@@ -386,23 +423,84 @@ onclick="deletePrompt(${p.id})">
 
 `).join("");
 
+
+}catch(error){
+
+list.innerHTML =
+"<div class='empty'>❌ Could not load prompts.</div>";
+
 }
 
-function addPrompt(){
+};
 
-const title=
+
+/* ==============================
+   COPY
+============================== */
+
+window.copyPrompt = async function(id){
+
+const snapshot =
+await getDocs(
+collection(db,"prompts")
+);
+
+let text = "";
+
+snapshot.forEach(item => {
+
+if(item.id === id){
+
+text = item.data().prompt || "";
+
+}
+
+});
+
+try{
+
+await navigator.clipboard.writeText(text);
+
+alert("✅ Prompt copied!");
+
+}catch{
+
+alert("Copy failed.");
+
+}
+
+};
+
+
+/* ==============================
+   ADD / EDIT PROMPT
+============================== */
+
+window.savePrompt = async function(){
+
+const user = auth.currentUser;
+
+if(!user || user.email !== ADMIN_EMAIL){
+
+alert("❌ Admin login required.");
+
+return;
+
+}
+
+const title =
 document.getElementById("title")
 .value.trim();
 
-const category=
+const category =
 document.getElementById("category")
 .value;
 
-const text=
+const prompt =
 document.getElementById("promptText")
 .value.trim();
 
-if(!title || !text){
+if(!title || !prompt){
 
 alert("Please enter title and prompt.");
 
@@ -410,86 +508,170 @@ return;
 
 }
 
-prompts.unshift({
+try{
 
-id:Date.now(),
+if(editingId){
 
+await updateDoc(
+doc(db,"prompts",editingId),
+{
 title:title,
-
 category:category,
+prompt:prompt,
+updatedAt:serverTimestamp()
+}
+);
 
-text:text,
+editingId = null;
 
-favorite:false
+document.getElementById("formTitle")
+.innerText = "➕ Add Prompt";
 
-});
+}else{
 
-save();
+await addDoc(
+collection(db,"prompts"),
+{
+title:title,
+category:category,
+prompt:prompt,
+createdAt:serverTimestamp()
+}
+);
+
+}
 
 document.getElementById("title").value="";
 
 document.getElementById("promptText").value="";
 
-renderPrompts();
+document.getElementById("adminMessage")
+.innerText="✅ Saved successfully!";
 
-alert("✅ Prompt added!");
+loadPrompts();
+
+}catch(error){
+
+alert("❌ Could not save prompt.");
 
 }
 
-function copyPrompt(id){
+};
 
-const prompt=
-prompts.find(p=>p.id===id);
 
-navigator.clipboard
-.writeText(prompt.text)
-.then(()=>{
+/* ==============================
+   EDIT PROMPT
+============================== */
 
-alert("✅ Prompt copied!");
+window.editPrompt = async function(id){
 
+const user = auth.currentUser;
+
+if(!user || user.email !== ADMIN_EMAIL){
+
+alert("Admin only.");
+
+return;
+
+}
+
+const snapshot =
+await getDocs(
+collection(db,"prompts")
+);
+
+snapshot.forEach(item => {
+
+if(item.id === id){
+
+const data = item.data();
+
+document.getElementById("title")
+.value = data.title || "";
+
+document.getElementById("category")
+.value = data.category || "Other";
+
+document.getElementById("promptText")
+.value = data.prompt || "";
+
+editingId = id;
+
+document.getElementById("formTitle")
+.innerText = "✏️ Edit Prompt";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
 });
 
 }
 
-function toggleFavorite(id){
+});
 
-const prompt=
-prompts.find(p=>p.id===id);
+};
 
-prompt.favorite=!prompt.favorite;
 
-save();
+/* ==============================
+   DELETE
+============================== */
 
-renderPrompts();
+window.deletePrompt = async function(id){
 
-}
+const user = auth.currentUser;
 
-function deletePrompt(id){
+if(!user || user.email !== alone747980@gmail.com){
 
-if(!confirm("Delete this prompt?"))
+alert("Admin only.");
+
 return;
 
-prompts=
-prompts.filter(p=>p.id!==id);
+}
 
-save();
+if(!confirm("Delete this prompt?")){
 
-renderPrompts();
+return;
 
 }
+
+try{
+
+await deleteDoc(
+doc(db,"prompts",id)
+);
+
+alert("✅ Prompt deleted!");
+
+loadPrompts();
+
+}catch(error){
+
+alert("❌ Delete failed.");
+
+}
+
+};
+
+
+/* ==============================
+   ESCAPE HTML
+============================== */
 
 function escapeHTML(text){
 
-return text
+return String(text)
+
 .replace(/&/g,"&amp;")
+
 .replace(/</g,"&lt;")
+
 .replace(/>/g,"&gt;")
+
 .replace(/"/g,"&quot;")
+
 .replace(/'/g,"&#039;");
 
 }
-
-renderPrompts();
 
 </script>
 
