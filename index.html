@@ -166,7 +166,7 @@ measurementId: "G-CZ7Q504NCD"
    ADMIN EMAIL
 ============================== */
 
-const ADMIN_EMAIL = "YOUR_ADMIN_EMAIL";
+const ADMIN_EMAIL = "alone747980@gmail.com";
 
 
 /* ==============================
@@ -195,7 +195,7 @@ let editingId = null;
 
 onAuthStateChanged(auth, user => {
 
-if(user && user.email === ADMIN_EMAIL){
+if(user && user.email === alone747980@gmail.com){
 
 document.getElementById("loginBox")
 .classList.add("hidden");
@@ -242,7 +242,7 @@ email,
 password
 );
 
-if(result.user.email !== ADMIN_EMAIL){
+if(result.user.email !== alone747980@gmail.com){
 
 await signOut(auth);
 
@@ -367,7 +367,7 @@ return;
 const user = auth.currentUser;
 
 const isAdmin =
-user && user.email === ADMIN_EMAIL;
+user && user.email ===alone747980@gmail.com;
 
 
 list.innerHTML =
@@ -567,7 +567,7 @@ window.editPrompt = async function(id){
 
 const user = auth.currentUser;
 
-if(!user || user.email !== ADMIN_EMAIL){
+if(!user || user.email !==alone747980@gmail.com){
 
 alert("Admin only.");
 
@@ -620,7 +620,7 @@ window.deletePrompt = async function(id){
 
 const user = auth.currentUser;
 
-if(!user || user.email !== alone747980@gmail.com){
+if(!user || user.email !==alone747980@gmail.com){
 
 alert("Admin only.");
 
