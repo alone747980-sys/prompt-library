@@ -686,6 +686,80 @@ return String(text)
 }
 
 </script>
+<div id="bulkImportBox" style="display:none; background:white; padding:15px; margin:15px; border-radius:12px;">
+  <h3>📤 Add 100 Prompts</h3>
 
+  <input type="file" id="csvFile" accept=".csv">
+
+  <button id="importBtn" style="margin-top:10px; padding:12px; width:100%;">
+    📤 Upload Prompts
+  </button>
+
+  <p id="importMessage"></p>
+</div>
 </body>
+document.getElementById("importBtn").addEventListener("click", async () => {
+
+  const file = document.getElementById("csvFile").files[0];
+  const message = document.getElementById("importMessage");
+
+  if (!file) {
+    message.textContent = "❌ पहले CSV file चुनें";
+    return;
+  }
+
+  const user = auth.currentUser;
+
+  if (!user || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+    message.textContent = "❌ Admin login required";
+    return;
+  }
+
+  message.textContent = "⏳ Upload हो रहा है...";
+
+  try {
+
+    const text = await file.text();
+
+    const lines = text.split(/\r?\n/).filter(x => x.trim());
+
+    let count = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+
+      const parts = lines[i].split(",");
+
+      const title = parts[0]?.trim();
+      const category = parts[1]?.trim() || "Other";
+      const prompt = parts.slice(2).join(",").trim();
+
+      if (!title || !prompt) continue;
+
+      await addDoc(collection(db, "prompts"), {
+        title: title,
+        category: category,
+        prompt: prompt,
+        createdAt: serverTimestamp()
+      });
+
+      count++;
+    }
+
+    message.textContent =
+      "✅ " + count + " prompts added successfully!";
+
+    file.value = "";
+
+    loadPrompts();
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "❌ " + error.message;
+
+  }
+
+});
 </html>
