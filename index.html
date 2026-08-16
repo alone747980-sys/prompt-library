@@ -6,34 +6,87 @@
 <title>Prompt Library</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f4f6fb;color:#111827}
-header{background:#111827;color:white;text-align:center;padding:25px 15px}
-header h1{font-size:29px}
-header p{margin-top:6px;color:#cbd5e1}
-.container{max-width:900px;margin:auto;padding:18px 15px}
-.search{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:16px;margin-bottom:14px}
-.categories{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
-.categories button{border:0;padding:10px 15px;border-radius:20px;background:white;white-space:nowrap}
-.categories button.active{background:#111827;color:white}
-.login,.adminBox{background:white;padding:18px;border-radius:15px;margin:15px 0;box-shadow:0 3px 15px #00000010}
-.login input,.adminBox input,.adminBox textarea,.adminBox select{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:9px}
-textarea{min-height:130px;resize:vertical}
-button{cursor:pointer}
-.mainBtn{width:100%;padding:13px;border:0;border-radius:10px;background:#111827;color:white;font-size:16px}
-.logout{background:#dc2626;margin-top:8px}
-.card{background:white;padding:18px;margin:14px 0;border-radius:15px;box-shadow:0 3px 15px #00000010}
-.tag{display:inline-block;background:#eef2ff;padding:5px 9px;border-radius:8px;font-size:12px;margin-bottom:10px}
-.card h3{margin-bottom:8px}
-.prompt{background:#f8fafc;padding:12px;border-radius:10px;line-height:1.5;white-space:pre-wrap;margin-bottom:12px}
-.actions{display:flex;gap:8px}
-.actions button{flex:1;padding:10px;border:0;border-radius:9px}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6fb;
+  color:#111827
+}
+header{
+  background:#111827;
+  color:white;
+  text-align:center;
+  padding:25px 15px
+}
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px 15px
+}
+.box,.card{
+  background:white;
+  padding:18px;
+  margin:15px 0;
+  border-radius:15px;
+  box-shadow:0 3px 15px #0001
+}
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:9px;
+  font-size:15px
+}
+textarea{min-height:130px}
+button{
+  border:0;
+  border-radius:9px;
+  padding:11px 15px;
+  cursor:pointer
+}
+.main{
+  width:100%;
+  background:#111827;
+  color:white;
+  font-size:16px
+}
+.logout{background:#dc2626;color:white;margin-top:8px;width:100%}
+.search{width:100%;padding:14px}
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin:10px 0
+}
+.categories button{white-space:nowrap;background:white}
+.categories .active{background:#111827;color:white}
+.tag{
+  display:inline-block;
+  background:#eef2ff;
+  padding:5px 9px;
+  border-radius:7px;
+  font-size:12px
+}
+.prompt{
+  background:#f8fafc;
+  padding:12px;
+  border-radius:9px;
+  white-space:pre-wrap;
+  line-height:1.5;
+  margin:10px 0
+}
+.actions{
+  display:flex;
+  gap:7px
+}
+.actions button{flex:1}
 .copy{background:#111827;color:white}
 .edit{background:#e5e7eb}
 .delete{background:#fee2e2;color:#991b1b}
 .hidden{display:none}
-.message{text-align:center;margin-top:8px;font-size:14px}
-.empty{text-align:center;padding:30px;color:#777}
+.message{text-align:center;margin:8px 0}
 </style>
 </head>
 
@@ -46,64 +99,75 @@ button{cursor:pointer}
 
 <div class="container">
 
-<!-- ADMIN LOGIN -->
-<div id="loginBox" class="login">
+<!-- LOGIN -->
+<div id="loginBox" class="box">
+
 <h2>🔐 Admin Login</h2>
 
-<input id="email" type="email" placeholder="Admin Email">
+<input id="email"
+type="email"
+placeholder="Admin Email">
 
-<input id="password" type="password" placeholder="Password">
+<input id="password"
+type="password"
+placeholder="Password">
 
-<button class="mainBtn" onclick="loginAdmin()">Login</button>
+<button id="loginBtn" class="main">
+Login
+</button>
 
 <div id="loginMessage" class="message"></div>
+
 </div>
 
+
 <!-- ADMIN PANEL -->
-<div id="adminPanel" class="adminBox hidden">
+<div id="adminPanel" class="box hidden">
 
 <h2 id="formTitle">➕ Add Prompt</h2>
 
-<input id="title" placeholder="Prompt title">
+<input id="title"
+placeholder="Prompt title">
 
 <select id="category">
+
 <option value="Image">🖼️ Image</option>
 <option value="Video">🎬 Video</option>
 <option value="Chat">🤖 Chat</option>
 <option value="Social">📱 Social</option>
 <option value="Other">📚 Other</option>
+
 </select>
 
-<textarea id="promptText" placeholder="Write your prompt here..."></textarea>
+<textarea id="promptText"
+placeholder="Write your prompt here..."></textarea>
 
-<button class="mainBtn" onclick="savePrompt()">Save Prompt</button>
+<button id="saveBtn" class="main">
+Save Prompt
+</button>
 
-<button class="mainBtn logout" onclick="logoutAdmin()">Logout</button>
+<button id="logoutBtn" class="logout">
+Logout
+</button>
 
 <div id="adminMessage" class="message"></div>
 
 </div>
 
+
 <input
 id="search"
 class="search"
-placeholder="🔍 Search prompts..."
-oninput="loadPrompts()"
->
+placeholder="🔍 Search prompts...">
 
 <div class="categories">
 
-<button class="active" onclick="setCategory('All',this)">All</button>
-
-<button onclick="setCategory('Image',this)">🖼️ Image</button>
-
-<button onclick="setCategory('Video',this)">🎬 Video</button>
-
-<button onclick="setCategory('Chat',this)">🤖 Chat</button>
-
-<button onclick="setCategory('Social',this)">📱 Social</button>
-
-<button onclick="setCategory('Other',this)">📚 Other</button>
+<button class="active" data-cat="All">All</button>
+<button data-cat="Image">🖼️ Image</button>
+<button data-cat="Video">🎬 Video</button>
+<button data-cat="Chat">🤖 Chat</button>
+<button data-cat="Social">📱 Social</button>
+<button data-cat="Other">📚 Other</button>
 
 </div>
 
@@ -111,9 +175,10 @@ oninput="loadPrompts()"
 
 </div>
 
+
 <script type="module">
 
-import { initializeApp }
+import {initializeApp}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -127,295 +192,263 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
 getFirestore,
 collection,
-addDoc,
 getDocs,
+addDoc,
+updateDoc,
 deleteDoc,
 doc,
-updateDoc,
-query,
-orderBy,
 serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-/* ==============================
-   FIREBASE CONFIG
-============================== */
+/* FIREBASE */
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyCo8J5VmlbIGoJikd8h0iXwAQsC9P3EK-4",
+apiKey:"AIzaSyCo8J5VmlbIGoJikd8h0iXwAQsC9P3EK-4",
 
-authDomain: "prompt-library-8fb60.firebaseapp.com",
+authDomain:"prompt-library-8fb60.firebaseapp.com",
 
-projectId: "prompt-library-8fb60",
+projectId:"prompt-library-8fb60",
 
-storageBucket: "prompt-library-8fb60.firebasestorage.app",
+storageBucket:"prompt-library-8fb60.firebasestorage.app",
 
-messagingSenderId: "609680472128",
+messagingSenderId:"609680472128",
 
-appId: "1:609680472128:web:4053c6b8c23a74d69b87a5",
+appId:"1:609680472128:web:4053c6b8c23a74d69b87a5",
 
-measurementId: "G-CZ7Q504NCD"
+measurementId:"G-CZ7Q504NCD"
 
 };
 
 
-/* ==============================
-   ADMIN EMAIL
-============================== */
+/* ONLY THIS EMAIL IS ADMIN */
 
-const ADMIN_EMAIL = "alone747980@gmail.com";
+const ADMIN_EMAIL="alone747980@gmail.com";
 
 
-/* ==============================
-   FIREBASE START
-============================== */
+const app=initializeApp(firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
+const auth=getAuth(app);
 
-const auth = getAuth(app);
+const db=getFirestore(app);
 
-const db = getFirestore(app);
-
-
-/* ==============================
-   VARIABLES
-============================== */
-
-let currentCategory = "All";
-
-let editingId = null;
+let category="All";
+let editId=null;
 
 
-/* ==============================
-   LOGIN STATE
-============================== */
+/* ELEMENTS */
 
-onAuthStateChanged(auth, user => {
+const loginBox=document.getElementById("loginBox");
+const adminPanel=document.getElementById("adminPanel");
+const loginMessage=document.getElementById("loginMessage");
+const adminMessage=document.getElementById("adminMessage");
 
-if(user && user.email === alone747980@gmail.com){
 
-document.getElementById("loginBox")
-.classList.add("hidden");
+/* LOGIN */
 
-document.getElementById("adminPanel")
-.classList.remove("hidden");
+document.getElementById("loginBtn")
+.addEventListener("click",async()=>{
 
-}else{
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
 
-document.getElementById("loginBox")
-.classList.remove("hidden");
+if(!email||!password){
 
-document.getElementById("adminPanel")
-.classList.add("hidden");
+loginMessage.textContent="Email and password required.";
+return;
 
 }
 
-loadPrompts();
-
-});
-
-
-/* ==============================
-   ADMIN LOGIN
-============================== */
-
-window.loginAdmin = async function(){
-
-const email =alone747980@gmail.com
-document.getElementById("email").value.trim();
-
-const password =Sumit@747980
-document.getElementById("password").value;
-
-const message =
-document.getElementById("loginMessage");
+loginMessage.textContent="Logging in...";
 
 try{
 
-const result =
+const result=
 await signInWithEmailAndPassword(
 auth,
 email,
 password
 );
 
-if(result.user.email !== alone747980@gmail.com){
+if(result.user.email.toLowerCase()!==
+ADMIN_EMAIL.toLowerCase()){
 
 await signOut(auth);
 
-message.innerText =
-"❌ You are not authorized as Admin.";
+loginMessage.textContent=
+"❌ This account is not Admin.";
 
 return;
 
 }
 
-message.innerText = "✅ Login successful!";
+loginMessage.textContent="✅ Login successful.";
 
 }catch(error){
 
-message.innerText =
-"❌ Login failed. Check email and password.";
+console.error(error);
+
+loginMessage.textContent=
+"❌ Login failed: "+error.code;
 
 }
 
-};
+});
 
 
-/* ==============================
-   LOGOUT
-============================== */
+/* AUTH STATE */
 
-window.logoutAdmin = async function(){
+onAuthStateChanged(auth,user=>{
 
-await signOut(auth);
+if(user &&
+user.email.toLowerCase()===
+ADMIN_EMAIL.toLowerCase()){
 
-};
+loginBox.classList.add("hidden");
+adminPanel.classList.remove("hidden");
 
+}else{
 
-/* ==============================
-   CATEGORY
-============================== */
+loginBox.classList.remove("hidden");
+adminPanel.classList.add("hidden");
 
-window.setCategory = function(category,button){
-
-currentCategory = category;
-
-document
-.querySelectorAll(".categories button")
-.forEach(btn =>
-btn.classList.remove("active")
-);
-
-button.classList.add("active");
+}
 
 loadPrompts();
 
-};
+});
 
 
-/* ==============================
-   LOAD PROMPTS
-============================== */
+/* LOGOUT */
 
-window.loadPrompts = async function(){
+document.getElementById("logoutBtn")
+.addEventListener("click",async()=>{
 
-const list =
-document.getElementById("promptList");
+await signOut(auth);
 
-const search =
+});
+
+
+/* CATEGORY */
+
+document.querySelectorAll("[data-cat]")
+.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+document.querySelectorAll("[data-cat]")
+.forEach(b=>b.classList.remove("active"));
+
+button.classList.add("active");
+
+category=button.dataset.cat;
+
+loadPrompts();
+
+});
+
+});
+
+
+/* SEARCH */
+
 document.getElementById("search")
-.value.toLowerCase();
+.addEventListener("input",loadPrompts);
 
-list.innerHTML =
-"<div class='empty'>Loading prompts...</div>";
+
+/* LOAD PROMPTS */
+
+async function loadPrompts(){
+
+const list=document.getElementById("promptList");
+
+list.innerHTML="<div class='box'>Loading...</div>";
 
 try{
 
-const snapshot =
-await getDocs(
-collection(db,"prompts")
-);
+const snapshot=
+await getDocs(collection(db,"prompts"));
 
-let prompts = [];
+const search=
+document.getElementById("search")
+.value.toLowerCase();
 
-snapshot.forEach(item => {
+const isAdmin=
+auth.currentUser &&
+auth.currentUser.email.toLowerCase()===
+ADMIN_EMAIL.toLowerCase();
 
-prompts.push({
+let data=[];
+
+snapshot.forEach(item=>{
+
+const p=item.data();
+
+const categoryOK=
+category==="All"||p.category===category;
+
+const searchOK=
+(p.title||"").toLowerCase().includes(search)||
+(p.prompt||"").toLowerCase().includes(search);
+
+if(categoryOK&&searchOK){
+
+data.push({
 id:item.id,
-...item.data()
+...p
 });
 
-});
-
-
-prompts = prompts.filter(p => {
-
-const categoryMatch =
-currentCategory === "All" ||
-p.category === currentCategory;
-
-const searchMatch =
-(p.title || "")
-.toLowerCase()
-.includes(search)
-
-||
-
-(p.prompt || "")
-.toLowerCase()
-.includes(search);
-
-return categoryMatch && searchMatch;
+}
 
 });
 
 
-if(prompts.length === 0){
+if(data.length===0){
 
-list.innerHTML =
-"<div class='empty'>😕 No prompts found</div>";
+list.innerHTML=
+"<div class='box'>😕 No prompts found</div>";
 
 return;
 
 }
 
 
-const user = auth.currentUser;
-
-const isAdmin =
-user && user.email ===alone747980@gmail.com;
-
-
-list.innerHTML =
-prompts.map(p => `
+list.innerHTML=data.map(p=>`
 
 <div class="card">
 
 <span class="tag">
-${escapeHTML(p.category || "Other")}
+${safe(p.category||"Other")}
 </span>
 
-<h3>
-${escapeHTML(p.title || "Untitled")}
-</h3>
+<h3>${safe(p.title||"Untitled")}</h3>
 
 <div class="prompt">
-${escapeHTML(p.prompt || "")}
+${safe(p.prompt||"")}
 </div>
 
 <div class="actions">
 
-<button
-class="copy"
-onclick="copyPrompt('${p.id}')">
+<button class="copy"
+data-copy="${p.id}">
 📋 Copy
 </button>
 
-${
-isAdmin
-?
-`
+${isAdmin?`
 
-<button
-class="edit"
-onclick="editPrompt('${p.id}')">
+<button class="edit"
+data-edit="${p.id}">
 ✏️ Edit
 </button>
 
-<button
-class="delete"
-onclick="deletePrompt('${p.id}')">
+<button class="delete"
+data-delete="${p.id}">
 🗑️ Delete
 </button>
 
-`
-:
-""
-}
+`:""}
 
 </div>
 
@@ -424,85 +457,98 @@ onclick="deletePrompt('${p.id}')">
 `).join("");
 
 
+document.querySelectorAll("[data-copy]")
+.forEach(btn=>{
+
+btn.onclick=()=>copyPrompt(btn.dataset.copy);
+
+});
+
+document.querySelectorAll("[data-edit]")
+.forEach(btn=>{
+
+btn.onclick=()=>editPrompt(btn.dataset.edit);
+
+});
+
+document.querySelectorAll("[data-delete]")
+.forEach(btn=>{
+
+btn.onclick=()=>deletePrompt(btn.dataset.delete);
+
+});
+
+
 }catch(error){
 
-list.innerHTML =
-"<div class='empty'>❌ Could not load prompts.</div>";
+console.error(error);
+
+list.innerHTML=
+"<div class='box'>❌ "+error.message+"</div>";
 
 }
 
-};
+}
 
 
-/* ==============================
-   COPY
-============================== */
+/* COPY */
 
-window.copyPrompt = async function(id){
+async function copyPrompt(id){
 
-const snapshot =
-await getDocs(
-collection(db,"prompts")
-);
+const snapshot=
+await getDocs(collection(db,"prompts"));
 
-let text = "";
+let text="";
 
-snapshot.forEach(item => {
+snapshot.forEach(item=>{
 
-if(item.id === id){
+if(item.id===id){
 
-text = item.data().prompt || "";
+text=item.data().prompt||"";
 
 }
 
 });
 
-try{
-
 await navigator.clipboard.writeText(text);
 
 alert("✅ Prompt copied!");
 
-}catch{
-
-alert("Copy failed.");
-
 }
 
-};
 
+/* SAVE */
 
-/* ==============================
-   ADD / EDIT PROMPT
-============================== */
+document.getElementById("saveBtn")
+.addEventListener("click",async()=>{
 
-window.savePrompt = async function(){
+const user=auth.currentUser;
 
-const user = auth.currentUser;
+if(!user||
+user.email.toLowerCase()!==
+ADMIN_EMAIL.toLowerCase()){
 
-if(!user || user.email !== ADMIN_EMAIL){
-
-alert("❌ Admin login required.");
+alert("Admin login required.");
 
 return;
 
 }
 
-const title =
+const title=
 document.getElementById("title")
 .value.trim();
 
-const category =
-document.getElementById("category")
-.value;
+const cat=
+document.getElementById("category").value;
 
-const prompt =
+const prompt=
 document.getElementById("promptText")
 .value.trim();
 
-if(!title || !prompt){
+if(!title||!prompt){
 
-alert("Please enter title and prompt.");
+adminMessage.textContent=
+"Title and prompt required.";
 
 return;
 
@@ -510,22 +556,25 @@ return;
 
 try{
 
-if(editingId){
+if(editId){
 
 await updateDoc(
-doc(db,"prompts",editingId),
+doc(db,"prompts",editId),
 {
 title:title,
-category:category,
+category:cat,
 prompt:prompt,
 updatedAt:serverTimestamp()
 }
 );
 
-editingId = null;
+adminMessage.textContent=
+"✅ Prompt updated.";
+
+editId=null;
 
 document.getElementById("formTitle")
-.innerText = "➕ Add Prompt";
+.textContent="➕ Add Prompt";
 
 }else{
 
@@ -533,72 +582,59 @@ await addDoc(
 collection(db,"prompts"),
 {
 title:title,
-category:category,
+category:cat,
 prompt:prompt,
 createdAt:serverTimestamp()
 }
 );
 
+adminMessage.textContent=
+"✅ Prompt added.";
+
 }
 
 document.getElementById("title").value="";
-
 document.getElementById("promptText").value="";
-
-document.getElementById("adminMessage")
-.innerText="✅ Saved successfully!";
 
 loadPrompts();
 
 }catch(error){
 
-alert("❌ Could not save prompt.");
+console.error(error);
+
+adminMessage.textContent=
+"❌ "+error.message;
 
 }
 
-};
+});
 
 
-/* ==============================
-   EDIT PROMPT
-============================== */
+/* EDIT */
 
-window.editPrompt = async function(id){
+async function editPrompt(id){
 
-const user = auth.currentUser;
+const snapshot=
+await getDocs(collection(db,"prompts"));
 
-if(!user || user.email !==alone747980@gmail.com){
+snapshot.forEach(item=>{
 
-alert("Admin only.");
+if(item.id===id){
 
-return;
+const p=item.data();
 
-}
+document.getElementById("title").value=p.title||"";
 
-const snapshot =
-await getDocs(
-collection(db,"prompts")
-);
+document.getElementById("category").value=
+p.category||"Other";
 
-snapshot.forEach(item => {
+document.getElementById("promptText").value=
+p.prompt||"";
 
-if(item.id === id){
-
-const data = item.data();
-
-document.getElementById("title")
-.value = data.title || "";
-
-document.getElementById("category")
-.value = data.category || "Other";
-
-document.getElementById("promptText")
-.value = data.prompt || "";
-
-editingId = id;
+editId=id;
 
 document.getElementById("formTitle")
-.innerText = "✏️ Edit Prompt";
+.textContent="✏️ Edit Prompt";
 
 window.scrollTo({
 top:0,
@@ -609,66 +645,42 @@ behavior:"smooth"
 
 });
 
-};
-
-
-/* ==============================
-   DELETE
-============================== */
-
-window.deletePrompt = async function(id){
-
-const user = auth.currentUser;
-
-if(!user || user.email !==alone747980@gmail.com){
-
-alert("Admin only.");
-
-return;
-
 }
 
-if(!confirm("Delete this prompt?")){
 
+/* DELETE */
+
+async function deletePrompt(id){
+
+if(!confirm("Delete this prompt?"))
 return;
-
-}
 
 try{
 
-await deleteDoc(
-doc(db,"prompts",id)
-);
+await deleteDoc(doc(db,"prompts",id));
 
-alert("✅ Prompt deleted!");
+alert("✅ Prompt deleted.");
 
 loadPrompts();
 
 }catch(error){
 
-alert("❌ Delete failed.");
+alert("❌ "+error.message);
 
 }
 
-};
+}
 
 
-/* ==============================
-   ESCAPE HTML
-============================== */
+/* SAFE HTML */
 
-function escapeHTML(text){
+function safe(text){
 
 return String(text)
-
 .replace(/&/g,"&amp;")
-
 .replace(/</g,"&lt;")
-
 .replace(/>/g,"&gt;")
-
 .replace(/"/g,"&quot;")
-
 .replace(/'/g,"&#039;");
 
 }
