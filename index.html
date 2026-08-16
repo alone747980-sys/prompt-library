@@ -1,318 +1,647 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prompt Library</title>
+
+<title>Prompt Library – AI Prompts Collection</title>
+
+<meta name="description"
+content="Prompt Library - AI Image, Video, ChatGPT, Social Media and Business prompts in one place.">
+
+<meta name="robots" content="index, follow">
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
+
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f6fb;
-  color:#111827
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f6fb;
+color:#111827;
 }
+
 header{
-  background:#111827;
-  color:white;
-  text-align:center;
-  padding:25px 15px
+background:#111827;
+color:white;
+text-align:center;
+padding:28px 15px;
 }
+
+header h1{
+margin:0;
+font-size:30px;
+}
+
+header p{
+margin:8px 0 0;
+color:#cbd5e1;
+}
+
 .container{
-  max-width:900px;
-  margin:auto;
-  padding:18px 15px
+max-width:900px;
+margin:auto;
+padding:18px 15px;
 }
-.box,.card{
-  background:white;
-  padding:18px;
-  margin:15px 0;
-  border-radius:15px;
-  box-shadow:0 3px 15px #0001
+
+.box,
+.card{
+background:white;
+padding:18px;
+margin:15px 0;
+border-radius:15px;
+box-shadow:0 3px 15px #00000012;
 }
-input,textarea,select{
-  width:100%;
-  padding:12px;
-  margin:7px 0;
-  border:1px solid #ddd;
-  border-radius:9px;
-  font-size:15px
+
+input,
+textarea,
+select{
+width:100%;
+padding:12px;
+margin:7px 0;
+border:1px solid #d1d5db;
+border-radius:9px;
+font-size:15px;
 }
-textarea{min-height:130px}
+
+textarea{
+min-height:130px;
+resize:vertical;
+}
+
 button{
-  border:0;
-  border-radius:9px;
-  padding:11px 15px;
-  cursor:pointer
+border:0;
+border-radius:9px;
+padding:11px 15px;
+cursor:pointer;
+font-size:15px;
 }
+
 .main{
-  width:100%;
-  background:#111827;
-  color:white;
-  font-size:16px
+width:100%;
+background:#111827;
+color:white;
 }
-.logout{background:#dc2626;color:white;margin-top:8px;width:100%}
-.search{width:100%;padding:14px}
+
+.logout{
+width:100%;
+background:#dc2626;
+color:white;
+margin-top:8px;
+}
+
+.search{
+width:100%;
+padding:14px;
+}
+
 .categories{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  margin:10px 0
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:5px 0 10px;
 }
-.categories button{white-space:nowrap;background:white}
-.categories .active{background:#111827;color:white}
+
+.categories button{
+white-space:nowrap;
+background:white;
+}
+
+.categories button.active{
+background:#111827;
+color:white;
+}
+
 .tag{
-  display:inline-block;
-  background:#eef2ff;
-  padding:5px 9px;
-  border-radius:7px;
-  font-size:12px
+display:inline-block;
+background:#eef2ff;
+padding:5px 9px;
+border-radius:7px;
+font-size:12px;
 }
+
 .prompt{
-  background:#f8fafc;
-  padding:12px;
-  border-radius:9px;
-  white-space:pre-wrap;
-  line-height:1.5;
-  margin:10px 0
+background:#f8fafc;
+padding:12px;
+border-radius:9px;
+white-space:pre-wrap;
+line-height:1.5;
+margin:10px 0;
 }
+
 .actions{
-  display:flex;
-  gap:7px
+display:flex;
+gap:7px;
 }
-.actions button{flex:1}
-.copy{background:#111827;color:white}
-.edit{background:#e5e7eb}
-.delete{background:#fee2e2;color:#991b1b}
-.hidden{display:none}
-.message{text-align:center;margin:8px 0}
+
+.actions button{
+flex:1;
+}
+
+.copy{
+background:#111827;
+color:white;
+}
+
+.edit{
+background:#e5e7eb;
+}
+
+.delete{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.hidden{
+display:none;
+}
+
+.message{
+text-align:center;
+margin:8px 0;
+font-size:14px;
+}
+
+.progress{
+margin-top:10px;
+font-size:14px;
+text-align:center;
+}
+
+.small{
+font-size:13px;
+color:#6b7280;
+line-height:1.5;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <header>
+
 <h1>📚 Prompt Library</h1>
+
 <p>AI Prompts — All in One Place</p>
+
 </header>
+
 
 <div class="container">
 
-<!-- LOGIN -->
+
+<!-- ADMIN LOGIN -->
+
 <div id="loginBox" class="box">
 
 <h2>🔐 Admin Login</h2>
 
-<input id="email"
+<input
+id="email"
 type="email"
 placeholder="Admin Email">
 
-<input id="password"
+<input
+id="password"
 type="password"
 placeholder="Password">
 
-<button id="loginBtn" class="main">
+<button
+id="loginBtn"
+class="main">
+
 Login
+
 </button>
 
-<div id="loginMessage" class="message"></div>
+<div
+id="loginMessage"
+class="message">
+</div>
 
 </div>
 
 
 <!-- ADMIN PANEL -->
-<div id="adminPanel" class="box hidden">
 
-<h2 id="formTitle">➕ Add Prompt</h2>
+<div
+id="adminPanel"
+class="box hidden">
 
-<input id="title"
+<h2 id="formTitle">
+➕ Add Prompt
+</h2>
+
+
+<!-- SINGLE PROMPT -->
+
+<input
+id="title"
 placeholder="Prompt title">
+
 
 <select id="category">
 
 <option value="Image">🖼️ Image</option>
+
 <option value="Video">🎬 Video</option>
+
 <option value="Chat">🤖 Chat</option>
+
 <option value="Social">📱 Social</option>
+
+<option value="Business">💼 Business</option>
+
 <option value="Other">📚 Other</option>
 
 </select>
 
-<textarea id="promptText"
-placeholder="Write your prompt here..."></textarea>
 
-<button id="saveBtn" class="main">
+<textarea
+id="promptText"
+placeholder="Write your prompt here...">
+</textarea>
+
+
+<button
+id="saveBtn"
+class="main">
+
 Save Prompt
+
 </button>
 
-<button id="logoutBtn" class="logout">
+
+<div
+id="adminMessage"
+class="message">
+</div>
+
+
+<hr>
+
+
+<!-- BULK IMPORT -->
+
+<h2>📤 Bulk Import</h2>
+
+<p class="small">
+
+CSV file से एक बार में अधिकतम
+<b>100 prompts</b> upload करें।
+
+<br><br>
+
+CSV columns:
+
+<b>title, category, prompt</b>
+
+</p>
+
+
+<input
+type="file"
+id="csvFile"
+accept=".csv">
+
+
+<button
+id="importBtn"
+class="main">
+
+📤 Upload 100 Prompts
+
+</button>
+
+
+<div
+id="importMessage"
+class="message">
+</div>
+
+
+<div
+id="progress"
+class="progress">
+</div>
+
+
+<button
+id="logoutBtn"
+class="logout">
+
 Logout
-</button>
 
-<div id="adminMessage" class="message"></div>
+</button>
 
 </div>
 
+
+<!-- SEARCH -->
 
 <input
 id="search"
 class="search"
 placeholder="🔍 Search prompts...">
 
+
+<!-- CATEGORIES -->
+
 <div class="categories">
 
-<button class="active" data-cat="All">All</button>
-<button data-cat="Image">🖼️ Image</button>
-<button data-cat="Video">🎬 Video</button>
-<button data-cat="Chat">🤖 Chat</button>
-<button data-cat="Social">📱 Social</button>
-<button data-cat="Other">📚 Other</button>
+<button
+class="active"
+data-cat="All">
+
+All
+
+</button>
+
+<button data-cat="Image">
+🖼️ Image
+</button>
+
+<button data-cat="Video">
+🎬 Video
+</button>
+
+<button data-cat="Chat">
+🤖 Chat
+</button>
+
+<button data-cat="Social">
+📱 Social
+</button>
+
+<button data-cat="Business">
+💼 Business
+</button>
+
+<button data-cat="Other">
+📚 Other
+</button>
 
 </div>
 
+
+<!-- PROMPTS -->
+
 <div id="promptList"></div>
+
 
 </div>
 
 
 <script type="module">
 
-import {initializeApp}
+
+/* =========================
+FIREBASE IMPORTS
+========================= */
+
+import { initializeApp }
+
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import {
-getAuth,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-getFirestore,
-collection,
-getDocs,
-addDoc,
-updateDoc,
-deleteDoc,
-doc,
-serverTimestamp
+
+getAuth,
+
+signInWithEmailAndPassword,
+
+onAuthStateChanged,
+
+signOut
+
 }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+
+getFirestore,
+
+collection,
+
+getDocs,
+
+addDoc,
+
+updateDoc,
+
+deleteDoc,
+
+doc,
+
+serverTimestamp,
+
+writeBatch
+
+}
+
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-/* FIREBASE */
+/* =========================
+FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyCo8J5VmlbIGoJikd8h0iXwAQsC9P3EK-4",
+apiKey:
+"AIzaSyCo8J5VmlbIGoJikd8h0iXwAQsC9P3EK-4",
 
-authDomain:"prompt-library-8fb60.firebaseapp.com",
+authDomain:
+"prompt-library-8fb60.firebaseapp.com",
 
-projectId:"prompt-library-8fb60",
+projectId:
+"prompt-library-8fb60",
 
-storageBucket:"prompt-library-8fb60.firebasestorage.app",
+storageBucket:
+"prompt-library-8fb60.firebasestorage.app",
 
-messagingSenderId:"609680472128",
+messagingSenderId:
+"609680472128",
 
-appId:"1:609680472128:web:4053c6b8c23a74d69b87a5",
+appId:
+"1:609680472128:web:4053c6b8c23a74d69b87a5",
 
-measurementId:"G-CZ7Q504NCD"
+measurementId:
+"G-CZ7Q504NCD"
 
 };
 
 
-/* ONLY THIS EMAIL IS ADMIN */
+/* =========================
+ADMIN EMAIL
+========================= */
 
-const ADMIN_EMAIL="alone747980@gmail.com";
-
-
-const app=initializeApp(firebaseConfig);
-
-const auth=getAuth(app);
-
-const db=getFirestore(app);
-
-let category="All";
-let editId=null;
+const ADMIN_EMAIL =
+"alone747980@gmail.com";
 
 
-/* ELEMENTS */
+/* =========================
+FIREBASE START
+========================= */
 
-const loginBox=document.getElementById("loginBox");
-const adminPanel=document.getElementById("adminPanel");
-const loginMessage=document.getElementById("loginMessage");
-const adminMessage=document.getElementById("adminMessage");
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
 
 
-/* LOGIN */
+/* =========================
+VARIABLES
+========================= */
 
-document.getElementById("loginBtn")
-.addEventListener("click",async()=>{
+let currentCategory = "All";
 
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value;
+let editingId = null;
 
-if(!email||!password){
 
-loginMessage.textContent="Email and password required.";
+/* =========================
+ELEMENTS
+========================= */
+
+const loginBox =
+document.getElementById("loginBox");
+
+const adminPanel =
+document.getElementById("adminPanel");
+
+const loginMessage =
+document.getElementById("loginMessage");
+
+const adminMessage =
+document.getElementById("adminMessage");
+
+const importMessage =
+document.getElementById("importMessage");
+
+const progress =
+document.getElementById("progress");
+
+
+/* =========================
+LOGIN
+========================= */
+
+document
+.getElementById("loginBtn")
+.addEventListener("click", async () => {
+
+const email =
+document
+.getElementById("email")
+.value
+.trim();
+
+const password =
+document
+.getElementById("password")
+.value;
+
+
+if(!email || !password){
+
+loginMessage.textContent =
+"❌ Email and password required.";
+
 return;
 
 }
 
-loginMessage.textContent="Logging in...";
+
+loginMessage.textContent =
+"Logging in...";
+
 
 try{
 
-const result=
+const result =
 await signInWithEmailAndPassword(
 auth,
 email,
 password
 );
 
-if(result.user.email.toLowerCase()!==
-ADMIN_EMAIL.toLowerCase()){
+
+if(
+result.user.email.toLowerCase()
+!==
+ADMIN_EMAIL.toLowerCase()
+){
 
 await signOut(auth);
 
-loginMessage.textContent=
+loginMessage.textContent =
 "❌ This account is not Admin.";
 
 return;
 
 }
 
-loginMessage.textContent="✅ Login successful.";
+
+loginMessage.textContent =
+"✅ Login successful!";
+
 
 }catch(error){
 
 console.error(error);
 
-loginMessage.textContent=
-"❌ Login failed: "+error.code;
+loginMessage.textContent =
+"❌ Login failed: " + error.code;
 
 }
 
 });
 
 
-/* AUTH STATE */
+/* =========================
+AUTH STATE
+========================= */
 
-onAuthStateChanged(auth,user=>{
+onAuthStateChanged(
+auth,
+user => {
 
-if(user &&
-user.email.toLowerCase()===
-ADMIN_EMAIL.toLowerCase()){
+if(
+user &&
+user.email.toLowerCase()
+===
+ADMIN_EMAIL.toLowerCase()
+){
 
-loginBox.classList.add("hidden");
-adminPanel.classList.remove("hidden");
+loginBox
+.classList
+.add("hidden");
+
+adminPanel
+.classList
+.remove("hidden");
 
 }else{
 
-loginBox.classList.remove("hidden");
-adminPanel.classList.add("hidden");
+loginBox
+.classList
+.remove("hidden");
+
+adminPanel
+.classList
+.add("hidden");
 
 }
 
@@ -321,29 +650,43 @@ loadPrompts();
 });
 
 
-/* LOGOUT */
+/* =========================
+LOGOUT
+========================= */
 
-document.getElementById("logoutBtn")
-.addEventListener("click",async()=>{
+document
+.getElementById("logoutBtn")
+.addEventListener(
+"click",
+async () => {
 
 await signOut(auth);
 
 });
 
 
-/* CATEGORY */
+/* =========================
+CATEGORY
+========================= */
 
-document.querySelectorAll("[data-cat]")
-.forEach(button=>{
+document
+.querySelectorAll("[data-cat]")
+.forEach(button => {
 
-button.addEventListener("click",()=>{
+button.addEventListener(
+"click",
+() => {
 
-document.querySelectorAll("[data-cat]")
-.forEach(b=>b.classList.remove("active"));
+document
+.querySelectorAll("[data-cat]")
+.forEach(b =>
+b.classList.remove("active")
+);
 
 button.classList.add("active");
 
-category=button.dataset.cat;
+currentCategory =
+button.dataset.cat;
 
 loadPrompts();
 
@@ -352,52 +695,88 @@ loadPrompts();
 });
 
 
-/* SEARCH */
+/* =========================
+SEARCH
+========================= */
 
-document.getElementById("search")
-.addEventListener("input",loadPrompts);
+document
+.getElementById("search")
+.addEventListener(
+"input",
+loadPrompts
+);
 
 
-/* LOAD PROMPTS */
+/* =========================
+LOAD PROMPTS
+========================= */
 
 async function loadPrompts(){
 
-const list=document.getElementById("promptList");
+const list =
+document.getElementById("promptList");
 
-list.innerHTML="<div class='box'>Loading...</div>";
+list.innerHTML =
+"<div class='box'>⏳ Loading...</div>";
+
 
 try{
 
-const snapshot=
-await getDocs(collection(db,"prompts"));
+const snapshot =
+await getDocs(
+collection(db,"prompts")
+);
 
-const search=
-document.getElementById("search")
-.value.toLowerCase();
 
-const isAdmin=
+const search =
+document
+.getElementById("search")
+.value
+.toLowerCase();
+
+
+const isAdmin =
 auth.currentUser &&
-auth.currentUser.email.toLowerCase()===
+auth.currentUser.email
+.toLowerCase()
+===
 ADMIN_EMAIL.toLowerCase();
 
-let data=[];
 
-snapshot.forEach(item=>{
+let data = [];
 
-const p=item.data();
 
-const categoryOK=
-category==="All"||p.category===category;
+snapshot.forEach(item => {
 
-const searchOK=
-(p.title||"").toLowerCase().includes(search)||
-(p.prompt||"").toLowerCase().includes(search);
+const p = item.data();
 
-if(categoryOK&&searchOK){
+
+const categoryOK =
+currentCategory === "All" ||
+p.category === currentCategory;
+
+
+const searchOK =
+
+(p.title || "")
+.toLowerCase()
+.includes(search)
+
+||
+
+(p.prompt || "")
+.toLowerCase()
+.includes(search);
+
+
+if(categoryOK && searchOK){
 
 data.push({
+
 id:item.id,
+
 ...p
+
 });
 
 }
@@ -405,9 +784,9 @@ id:item.id,
 });
 
 
-if(data.length===0){
+if(data.length === 0){
 
-list.innerHTML=
+list.innerHTML =
 "<div class='box'>😕 No prompts found</div>";
 
 return;
@@ -415,66 +794,133 @@ return;
 }
 
 
-list.innerHTML=data.map(p=>`
+list.innerHTML =
+data
+.map(p => `
 
 <div class="card">
 
 <span class="tag">
-${safe(p.category||"Other")}
+
+${safe(
+p.category || "Other"
+)}
+
 </span>
 
-<h3>${safe(p.title||"Untitled")}</h3>
+
+<h3>
+
+${safe(
+p.title || "Untitled"
+)}
+
+</h3>
+
 
 <div class="prompt">
-${safe(p.prompt||"")}
+
+${safe(
+p.prompt || ""
+)}
+
 </div>
+
 
 <div class="actions">
 
-<button class="copy"
+
+<button
+class="copy"
 data-copy="${p.id}">
+
 📋 Copy
+
 </button>
 
-${isAdmin?`
 
-<button class="edit"
+${
+isAdmin
+
+?
+
+`
+
+<button
+class="edit"
 data-edit="${p.id}">
+
 ✏️ Edit
+
 </button>
 
-<button class="delete"
+
+<button
+class="delete"
 data-delete="${p.id}">
+
 🗑️ Delete
+
 </button>
 
-`:""}
+`
+
+:
+
+""
+
+}
+
 
 </div>
 
 </div>
 
-`).join("");
+`)
+.join("");
 
 
-document.querySelectorAll("[data-copy]")
-.forEach(btn=>{
+/* COPY BUTTONS */
 
-btn.onclick=()=>copyPrompt(btn.dataset.copy);
+document
+.querySelectorAll("[data-copy]")
+.forEach(btn => {
+
+btn.onclick =
+() =>
+copyPrompt(
+btn.dataset.copy
+);
 
 });
 
-document.querySelectorAll("[data-edit]")
-.forEach(btn=>{
 
-btn.onclick=()=>editPrompt(btn.dataset.edit);
+/* EDIT BUTTONS */
+
+document
+.querySelectorAll("[data-edit]")
+.forEach(btn => {
+
+btn.onclick =
+() =>
+editPrompt(
+btn.dataset.edit
+);
 
 });
 
-document.querySelectorAll("[data-delete]")
-.forEach(btn=>{
 
-btn.onclick=()=>deletePrompt(btn.dataset.delete);
+/* DELETE BUTTONS */
+
+document
+.querySelectorAll("[data-delete]")
+.forEach(btn => {
+
+btn.onclick =
+() =>
+deletePrompt(
+btn.dataset.delete
+);
 
 });
 
@@ -483,283 +929,827 @@ btn.onclick=()=>deletePrompt(btn.dataset.delete);
 
 console.error(error);
 
-list.innerHTML=
-"<div class='box'>❌ "+error.message+"</div>";
+list.innerHTML =
+"<div class='box'>❌ " +
+error.message +
+"</div>";
 
 }
 
 }
 
 
-/* COPY */
+/* =========================
+COPY PROMPT
+========================= */
 
 async function copyPrompt(id){
 
-const snapshot=
-await getDocs(collection(db,"prompts"));
+const snapshot =
+await getDocs(
+collection(db,"prompts")
+);
 
-let text="";
 
-snapshot.forEach(item=>{
+let text = "";
 
-if(item.id===id){
 
-text=item.data().prompt||"";
+snapshot.forEach(item => {
+
+if(item.id === id){
+
+text =
+item.data().prompt || "";
 
 }
 
 });
 
-await navigator.clipboard.writeText(text);
-
-alert("✅ Prompt copied!");
-
-}
-
-
-/* SAVE */
-
-document.getElementById("saveBtn")
-.addEventListener("click",async()=>{
-
-const user=auth.currentUser;
-
-if(!user||
-user.email.toLowerCase()!==
-ADMIN_EMAIL.toLowerCase()){
-
-alert("Admin login required.");
-
-return;
-
-}
-
-const title=
-document.getElementById("title")
-.value.trim();
-
-const cat=
-document.getElementById("category").value;
-
-const prompt=
-document.getElementById("promptText")
-.value.trim();
-
-if(!title||!prompt){
-
-adminMessage.textContent=
-"Title and prompt required.";
-
-return;
-
-}
 
 try{
 
-if(editId){
+await navigator
+.clipboard
+.writeText(text);
 
-await updateDoc(
-doc(db,"prompts",editId),
-{
-title:title,
-category:cat,
-prompt:prompt,
-updatedAt:serverTimestamp()
-}
+alert("✅ Prompt copied!");
+
+}catch{
+
+alert(
+"❌ Copy failed."
 );
 
-adminMessage.textContent=
-"✅ Prompt updated.";
+}
 
-editId=null;
+}
 
-document.getElementById("formTitle")
-.textContent="➕ Add Prompt";
+
+/* =========================
+ADD / UPDATE PROMPT
+========================= */
+
+document
+.getElementById("saveBtn")
+.addEventListener(
+"click",
+async () => {
+
+
+const user =
+auth.currentUser;
+
+
+if(
+!user ||
+user.email.toLowerCase()
+!==
+ADMIN_EMAIL.toLowerCase()
+){
+
+alert(
+"❌ Admin login required."
+);
+
+return;
+
+}
+
+
+const title =
+document
+.getElementById("title")
+.value
+.trim();
+
+
+const cat =
+document
+.getElementById("category")
+.value;
+
+
+const prompt =
+document
+.getElementById("promptText")
+.value
+.trim();
+
+
+if(!title || !prompt){
+
+adminMessage.textContent =
+"❌ Title and prompt required.";
+
+return;
+
+}
+
+
+try{
+
+
+if(editingId){
+
+await updateDoc(
+
+doc(
+db,
+"prompts",
+editingId
+),
+
+{
+
+title:title,
+
+category:cat,
+
+prompt:prompt,
+
+updatedAt:
+serverTimestamp()
+
+}
+
+);
+
+
+adminMessage.textContent =
+"✅ Prompt updated!";
+
+
+editingId = null;
+
+
+document
+.getElementById("formTitle")
+.textContent =
+"➕ Add Prompt";
+
 
 }else{
 
+
 await addDoc(
-collection(db,"prompts"),
+
+collection(
+db,
+"prompts"
+),
+
 {
+
 title:title,
+
 category:cat,
+
 prompt:prompt,
-createdAt:serverTimestamp()
+
+createdAt:
+serverTimestamp()
+
 }
+
 );
 
-adminMessage.textContent=
-"✅ Prompt added.";
+
+adminMessage.textContent =
+"✅ Prompt added!";
 
 }
 
-document.getElementById("title").value="";
-document.getElementById("promptText").value="";
+
+document
+.getElementById("title")
+.value = "";
+
+
+document
+.getElementById("promptText")
+.value = "";
+
 
 loadPrompts();
+
 
 }catch(error){
 
 console.error(error);
 
-adminMessage.textContent=
-"❌ "+error.message;
+adminMessage.textContent =
+"❌ " + error.message;
 
 }
 
 });
 
 
-/* EDIT */
+/* =========================
+EDIT
+========================= */
 
 async function editPrompt(id){
 
-const snapshot=
-await getDocs(collection(db,"prompts"));
+const user =
+auth.currentUser;
 
-snapshot.forEach(item=>{
 
-if(item.id===id){
+if(
+!user ||
+user.email.toLowerCase()
+!==
+ADMIN_EMAIL.toLowerCase()
+){
 
-const p=item.data();
+alert(
+"❌ Admin only."
+);
 
-document.getElementById("title").value=p.title||"";
+return;
 
-document.getElementById("category").value=
-p.category||"Other";
+}
 
-document.getElementById("promptText").value=
-p.prompt||"";
 
-editId=id;
+const snapshot =
+await getDocs(
+collection(db,"prompts")
+);
 
-document.getElementById("formTitle")
-.textContent="✏️ Edit Prompt";
+
+snapshot.forEach(item => {
+
+if(item.id === id){
+
+const p =
+item.data();
+
+
+document
+.getElementById("title")
+.value =
+p.title || "";
+
+
+document
+.getElementById("category")
+.value =
+p.category || "Other";
+
+
+document
+.getElementById("promptText")
+.value =
+p.prompt || "";
+
+
+editingId = id;
+
+
+document
+.getElementById("formTitle")
+.textContent =
+"✏️ Edit Prompt";
+
 
 window.scrollTo({
+
 top:0,
+
 behavior:"smooth"
-});
-
-}
 
 });
 
 }
 
+});
 
-/* DELETE */
+}
+
+
+/* =========================
+DELETE
+========================= */
 
 async function deletePrompt(id){
 
-if(!confirm("Delete this prompt?"))
+const user =
+auth.currentUser;
+
+
+if(
+!user ||
+user.email.toLowerCase()
+!==
+ADMIN_EMAIL.toLowerCase()
+){
+
+alert(
+"❌ Admin only."
+);
+
 return;
+
+}
+
+
+if(
+!confirm(
+"Delete this prompt?"
+)
+){
+
+return;
+
+}
+
 
 try{
 
-await deleteDoc(doc(db,"prompts",id));
+await deleteDoc(
 
-alert("✅ Prompt deleted.");
+doc(
+db,
+"prompts",
+id
+)
+
+);
+
+
+alert(
+"✅ Prompt deleted!"
+);
+
 
 loadPrompts();
 
+
 }catch(error){
 
-alert("❌ "+error.message);
+alert(
+"❌ " +
+error.message
+);
 
 }
 
 }
 
 
-/* SAFE HTML */
+/* =========================
+CSV IMPORT
+MAX 100
+========================= */
+
+document
+.getElementById("importBtn")
+.addEventListener(
+"click",
+async () => {
+
+
+const user =
+auth.currentUser;
+
+
+const fileInput =
+document
+.getElementById("csvFile");
+
+
+const file =
+fileInput.files[0];
+
+
+if(
+!user ||
+user.email.toLowerCase()
+!==
+ADMIN_EMAIL.toLowerCase()
+){
+
+importMessage.textContent =
+"❌ Admin login required.";
+
+return;
+
+}
+
+
+if(!file){
+
+importMessage.textContent =
+"❌ पहले CSV file चुनें.";
+
+return;
+
+}
+
+
+if(
+!file.name
+.toLowerCase()
+.endsWith(".csv")
+){
+
+importMessage.textContent =
+"❌ केवल CSV file चुनें.";
+
+return;
+
+}
+
+
+importMessage.textContent =
+"⏳ CSV पढ़ी जा रही है...";
+
+
+try{
+
+
+const text =
+await file.text();
+
+
+const rows =
+parseCSV(text);
+
+
+if(rows.length === 0){
+
+importMessage.textContent =
+"❌ CSV में कोई prompt नहीं मिला.";
+
+return;
+
+}
+
+
+if(rows.length > 100){
+
+importMessage.textContent =
+"❌ एक बार में अधिकतम 100 prompts.";
+
+return;
+
+}
+
+
+importMessage.textContent =
+"⏳ Upload शुरू हो गया...";
+
+
+let batch =
+writeBatch(db);
+
+
+let batchSize = 0;
+
+
+let count = 0;
+
+
+for(
+const row of rows
+){
+
+
+if(
+!row.title ||
+!row.prompt
+){
+
+continue;
+
+}
+
+
+const newDoc =
+doc(
+collection(
+db,
+"prompts"
+)
+);
+
+
+batch.set(
+newDoc,
+{
+
+title:
+row.title.trim(),
+
+category:
+row.category.trim()
+|| "Other",
+
+prompt:
+row.prompt.trim(),
+
+createdAt:
+serverTimestamp()
+
+}
+);
+
+
+batchSize++;
+
+count++;
+
+
+/*
+Firestore batch limit 500
+हम 400 पर commit करेंगे।
+*/
+
+if(batchSize === 400){
+
+await batch.commit();
+
+batch =
+writeBatch(db);
+
+batchSize = 0;
+
+}
+
+}
+
+
+if(batchSize > 0){
+
+await batch.commit();
+
+}
+
+
+importMessage.textContent =
+"✅ " +
+count +
+" prompts successfully added!";
+
+
+progress.textContent =
+"🎉 Bulk import complete.";
+
+
+fileInput.value = "";
+
+
+loadPrompts();
+
+
+}catch(error){
+
+console.error(error);
+
+importMessage.textContent =
+"❌ " +
+error.message;
+
+}
+
+});
+
+
+/* =========================
+CSV PARSER
+========================= */
+
+function parseCSV(text){
+
+const rows = [];
+
+let row = [];
+
+let value = "";
+
+let insideQuotes = false;
+
+
+for(
+let i=0;
+i<text.length;
+i++
+){
+
+const char =
+text[i];
+
+
+const next =
+text[i+1];
+
+
+if(
+char === '"' &&
+insideQuotes &&
+next === '"'
+){
+
+value += '"';
+
+i++;
+
+continue;
+
+}
+
+
+if(char === '"'){
+
+insideQuotes =
+!insideQuotes;
+
+continue;
+
+}
+
+
+if(
+char === "," &&
+!insideQuotes
+){
+
+row.push(value);
+
+value = "";
+
+continue;
+
+}
+
+
+if(
+(char === "\n" ||
+char === "\r") &&
+!insideQuotes
+){
+
+if(
+char === "\r" &&
+next === "\n"
+){
+
+i++;
+
+}
+
+
+row.push(value);
+
+value = "";
+
+
+if(row.length > 1){
+
+rows.push(row);
+
+}
+
+
+row = [];
+
+continue;
+
+}
+
+
+value += char;
+
+}
+
+
+if(value.length > 0 || row.length > 0){
+
+row.push(value);
+
+rows.push(row);
+
+}
+
+
+if(rows.length < 2){
+
+return [];
+
+}
+
+
+/* First row = headers */
+
+const headers =
+rows[0]
+.map(h =>
+h.trim()
+.toLowerCase()
+);
+
+
+const titleIndex =
+headers.indexOf("title");
+
+
+const categoryIndex =
+headers.indexOf("category");
+
+
+const promptIndex =
+headers.indexOf("prompt");
+
+
+if(
+titleIndex === -1 ||
+promptIndex === -1
+){
+
+throw new Error(
+"CSV में title और prompt columns जरूरी हैं."
+);
+
+}
+
+
+const result = [];
+
+
+for(
+let i=1;
+i<rows.length;
+i++
+){
+
+
+const r =
+rows[i];
+
+
+result.push({
+
+title:
+r[titleIndex] || "",
+
+category:
+categoryIndex >= 0
+?
+r[categoryIndex] || "Other"
+:
+"Other",
+
+prompt:
+r[promptIndex] || ""
+
+});
+
+}
+
+
+return result;
+
+}
+
+
+/* =========================
+SAFE HTML
+========================= */
 
 function safe(text){
 
 return String(text)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
+
 </script>
-<div id="bulkImportBox" style="display:none; background:white; padding:15px; margin:15px; border-radius:12px;">
-  <h3>📤 Add 100 Prompts</h3>
 
-  <input type="file" id="csvFile" accept=".csv">
-
-  <button id="importBtn" style="margin-top:10px; padding:12px; width:100%;">
-    📤 Upload Prompts
-  </button>
-
-  <p id="importMessage"></p>
-</div>
 </body>
-document.getElementById("importBtn").addEventListener("click", async () => {
 
-  const file = document.getElementById("csvFile").files[0];
-  const message = document.getElementById("importMessage");
-
-  if (!file) {
-    message.textContent = "❌ पहले CSV file चुनें";
-    return;
-  }
-
-  const user = auth.currentUser;
-
-  if (!user || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-    message.textContent = "❌ Admin login required";
-    return;
-  }
-
-  message.textContent = "⏳ Upload हो रहा है...";
-
-  try {
-
-    const text = await file.text();
-
-    const lines = text.split(/\r?\n/).filter(x => x.trim());
-
-    let count = 0;
-
-    for (let i = 1; i < lines.length; i++) {
-
-      const parts = lines[i].split(",");
-
-      const title = parts[0]?.trim();
-      const category = parts[1]?.trim() || "Other";
-      const prompt = parts.slice(2).join(",").trim();
-
-      if (!title || !prompt) continue;
-
-      await addDoc(collection(db, "prompts"), {
-        title: title,
-        category: category,
-        prompt: prompt,
-        createdAt: serverTimestamp()
-      });
-
-      count++;
-    }
-
-    message.textContent =
-      "✅ " + count + " prompts added successfully!";
-
-    file.value = "";
-
-    loadPrompts();
-
-  } catch (error) {
-
-    console.error(error);
-
-    message.textContent =
-      "❌ " + error.message;
-
-  }
-
-});
 </html>
