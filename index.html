@@ -124,6 +124,15 @@ border-radius:7px;
 font-size:12px;
 }
 
+.prompt-image{
+width:100%;
+max-height:500px;
+object-fit:cover;
+display:block;
+border-radius:12px;
+margin-bottom:14px;
+}
+
 .prompt{
 background:#f8fafc;
 padding:12px;
@@ -178,6 +187,42 @@ color:#6b7280;
 line-height:1.5;
 }
 
+.image-help{
+font-size:12px;
+color:#6b7280;
+margin-top:-2px;
+margin-bottom:8px;
+}
+
+.image-preview{
+width:100%;
+max-height:250px;
+object-fit:cover;
+border-radius:10px;
+margin-top:8px;
+display:none;
+}
+
+@media(max-width:600px){
+
+header h1{
+font-size:25px;
+}
+
+.container{
+padding:12px;
+}
+
+.card{
+padding:14px;
+}
+
+.prompt-image{
+max-height:350px;
+}
+
+}
+
 </style>
 
 </head>
@@ -192,9 +237,7 @@ line-height:1.5;
 
 </header>
 
-
 <div class="container">
-
 
 <!-- ADMIN LOGIN -->
 
@@ -238,9 +281,6 @@ class="box hidden">
 ➕ Add Prompt
 </h2>
 
-
-<!-- SINGLE PROMPT -->
-
 <input
 id="title"
 placeholder="Prompt title">
@@ -261,6 +301,27 @@ placeholder="Prompt title">
 <option value="Other">📚 Other</option>
 
 </select>
+
+
+<!-- NEW IMAGE URL FIELD -->
+
+<label>
+<b>🖼️ Generated Image</b>
+</label>
+
+<input
+id="imageUrl"
+type="url"
+placeholder="Paste GitHub Raw image URL">
+
+<div class="image-help">
+GitHub में uploaded image का Raw URL यहाँ paste करें।
+</div>
+
+<img
+id="imagePreview"
+class="image-preview"
+alt="Image preview">
 
 
 <textarea
@@ -300,7 +361,12 @@ CSV file से एक बार में अधिकतम
 
 CSV columns:
 
-<b>title, category, prompt</b>
+<b>title, category, prompt, imageUrl</b>
+
+<br><br>
+
+<b>imageUrl optional है।</b>
+अगर image नहीं है तो खाली छोड़ सकते हैं।
 
 </p>
 
@@ -393,7 +459,6 @@ All
 <!-- PROMPTS -->
 
 <div id="promptList"></div>
-
 
 </div>
 
@@ -532,6 +597,46 @@ document.getElementById("importMessage");
 
 const progress =
 document.getElementById("progress");
+
+const imageUrlInput =
+document.getElementById("imageUrl");
+
+const imagePreview =
+document.getElementById("imagePreview");
+
+
+/* =========================
+IMAGE PREVIEW
+========================= */
+
+imageUrlInput.addEventListener(
+"input",
+() => {
+
+const url =
+imageUrlInput.value.trim();
+
+if(
+url &&
+(
+url.startsWith("https://") ||
+url.startsWith("http://")
+)
+){
+
+imagePreview.src = url;
+
+imagePreview.style.display = "block";
+
+}else{
+
+imagePreview.removeAttribute("src");
+
+imagePreview.style.display = "none";
+
+}
+
+});
 
 
 /* =========================
@@ -800,6 +905,23 @@ data
 
 <div class="card">
 
+${
+p.imageUrl
+?
+`
+
+<img
+class="prompt-image"
+src="${safeUrl(p.imageUrl)}"
+alt="${safe(p.title || "Prompt image")}"
+loading="lazy"
+onerror="this.style.display='none';">
+
+`
+:
+""
+}
+
 <span class="tag">
 
 ${safe(
@@ -1036,10 +1158,35 @@ document
 .trim();
 
 
+const imageUrl =
+document
+.getElementById("imageUrl")
+.value
+.trim();
+
+
 if(!title || !prompt){
 
 adminMessage.textContent =
 "❌ Title and prompt required.";
+
+return;
+
+}
+
+
+/* Image URL validation */
+
+if(
+imageUrl &&
+!(
+imageUrl.startsWith("https://") ||
+imageUrl.startsWith("http://")
+)
+){
+
+adminMessage.textContent =
+"❌ Image URL सही नहीं है.";
 
 return;
 
@@ -1066,6 +1213,8 @@ title:title,
 category:cat,
 
 prompt:prompt,
+
+imageUrl:imageUrl,
 
 updatedAt:
 serverTimestamp()
@@ -1106,6 +1255,8 @@ category:cat,
 
 prompt:prompt,
 
+imageUrl:imageUrl,
+
 createdAt:
 serverTimestamp()
 
@@ -1128,6 +1279,13 @@ document
 document
 .getElementById("promptText")
 .value = "";
+
+
+imageUrlInput.value = "";
+
+imagePreview.removeAttribute("src");
+
+imagePreview.style.display = "none";
 
 
 loadPrompts();
@@ -1201,6 +1359,26 @@ document
 .getElementById("promptText")
 .value =
 p.prompt || "";
+
+
+imageUrlInput.value =
+p.imageUrl || "";
+
+
+if(p.imageUrl){
+
+imagePreview.src =
+p.imageUrl;
+
+imagePreview.style.display =
+"block";
+
+}else{
+
+imagePreview.style.display =
+"none";
+
+}
 
 
 editingId = id;
@@ -1448,6 +1626,9 @@ row.category.trim()
 prompt:
 row.prompt.trim(),
 
+imageUrl:
+(row.imageUrl || "").trim(),
+
 createdAt:
 serverTimestamp()
 
@@ -1661,6 +1842,10 @@ const promptIndex =
 headers.indexOf("prompt");
 
 
+const imageUrlIndex =
+headers.indexOf("imageurl");
+
+
 if(
 titleIndex === -1 ||
 promptIndex === -1
@@ -1700,7 +1885,14 @@ r[categoryIndex] || "Other"
 "Other",
 
 prompt:
-r[promptIndex] || ""
+r[promptIndex] || "",
+
+imageUrl:
+imageUrlIndex >= 0
+?
+r[imageUrlIndex] || ""
+:
+""
 
 });
 
@@ -1744,6 +1936,29 @@ return String(text)
 /'/g,
 "&#039;"
 );
+
+}
+
+
+/* =========================
+SAFE IMAGE URL
+========================= */
+
+function safeUrl(url){
+
+const value =
+String(url || "").trim();
+
+if(
+value.startsWith("https://") ||
+value.startsWith("http://")
+){
+
+return safe(value);
+
+}
+
+return "";
 
 }
 
